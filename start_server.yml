@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  vars_prompt:
+    datacenter: "Please datacenter of server to start (zrh, lvs, wdc)"
+    uuid: "Please uuid of server to start"
+  tasks:
+    - name: start server
+      cloudsigma_server: status=running datacenter={{datacenter}} uuid={{uuid}}

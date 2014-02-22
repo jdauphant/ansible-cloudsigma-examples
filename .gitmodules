@@ -1,0 +1,3 @@
+[submodule "library/cloudsigma-modules"]
+	path = library/cloudsigma-modules
+	url = git@github.com:jdauphant/ansible-cloudsigma-modules.git
