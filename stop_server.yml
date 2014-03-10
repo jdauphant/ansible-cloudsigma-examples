@@ -6,5 +6,5 @@
     datacenter: "Please datacenter of server to start (zrh, lvs, wdc)"
     uuid: "Please uuid of server to start"
   tasks:
-    - name: start server
+    - name: stop server
       cloudsigma_server: status=stopped datacenter={{datacenter}} uuid={{uuid}}
