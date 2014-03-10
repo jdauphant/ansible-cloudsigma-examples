@@ -1,0 +1,57 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  vars_prompt:
+    datacenter: "Please datacenter of server to start (zrh, lvs, wdc)"
+    driveUUID: "Please uuid of a drive"
+    vlanUUID: "Please uuid of a vlan"
+    ipUUID: "Please uuid of an ip"
+  vars:
+    meta:
+     meta1: test
+     meta2: test2
+  tasks:
+    - name: create server
+      local_action:
+          module: cloudsigma_server
+          status: 'present'
+          name: 'Server Ansible 1'
+          cpu: 1.5
+          mem: 1.0
+          drives:
+            - new_drive:
+                name: 'Drive 1'
+                size: 10
+                media: disk
+              device: virtio
+              dev_channel: '0:0'
+            - new_drive:
+                name: 'Drive 2'
+                size: 1
+                media: cdrom
+              device: virtio
+              dev_channel: '0:1'
+            - uuid: "{{driveUUID}}"
+              device: virtio
+              dev_channel: '0:2'
+            - new_drive:
+                name: 'Drive IDE 1'
+                size: 12
+                media: disk
+              device: ide
+              dev_channel: '0:0'
+          nics:
+            - model: virtio
+              vlan: "{{vlanUUID}}"
+            - model: e1000
+              ip_v4_conf:
+                conf: dhcp
+            - model: e1000
+              ip_v4_conf: 
+                conf: static
+                ip: "{{ipUUID}}"
+          meta: "{{meta}}"
+          datacenter: "{{datacenter}}"
+          vnc_password: "testvnhcpassword"
+
